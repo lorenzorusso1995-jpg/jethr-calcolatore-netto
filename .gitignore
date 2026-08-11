@@ -1,0 +1,5 @@
+# Nel repo pubblico va solo il calcolatore: index.html
+# Tutto il resto (ricerca, documentazione, versioni precedenti) resta in locale.
+*
+!index.html
+!.gitignore
