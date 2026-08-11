@@ -2,7 +2,7 @@
 
 **→ [Provalo qui](https://lorenzorusso1995-jpg.github.io/jethr-calcolatore-netto/)**
 
-Prototipo realizzato per la selezione **Product Builder @ Jet HR**. Data una RAL, calcola il netto annuo e mensile con il dettaglio di ogni trattenuta, il calcolo passo per passo con i numeri di chi lo usa e la fonte normativa di ogni voce. Funziona anche al contrario: dal netto desiderato alla RAL da chiedere.
+Prototipo realizzato per la selezione **AI Builder @ Jet HR**. Data una RAL, calcola il netto annuo e mensile con il dettaglio di ogni trattenuta, il calcolo passo per passo con i numeri di chi lo usa e la fonte normativa di ogni voce. Funziona anche al contrario: dal netto desiderato alla RAL da chiedere.
 
 Tutto sta in un unico file HTML, senza dipendenze e senza build.
 
