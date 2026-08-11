@@ -3,15 +3,18 @@
 **[Provalo qui](https://lorenzorusso1995-jpg.github.io/jethr-calcolatore-netto/)**
 
 Prototipo per la selezione AI Builder di Jet HR.
+
 Inserisci la RAL e ottieni il netto annuo e mensile, con il dettaglio di ogni trattenuta e il calcolo passo per passo. Funziona anche al contrario, dal netto che vuoi in busta alla RAL da chiedere.
 
 ## Cosa fa
 
 Calcola il netto annuo e quello mensile, tenendo separati il mese ordinario e la tredicesima/quattordicesima (dal momento che sulle mensilità aggiuntive non si applicano le detrazioni).
 
+Fa anche il percorso inverso, che è poi la domanda vera di chi sta trattando un'offerta: che RAL devo chiedere per avere 1.800 € netti al mese?
+
 Ogni voce del risultato si può aprire e leggere nel dettaglio, con la base imponibile, l'aliquota, il calcolo svolto sui numeri inseriti e il riferimento normativo.
 
-L'addizionale comunale è stata importata dalla tabella ufficiale del MEF: delibera 2026 se pubblicata, altrimenti l'ultimo dato in vigore, come prevede la norma. Le addizionali regionali sono tutte e 21 (le 19 regioni più Trento e Bolzano, che deliberano separatamente).
+L'addizionale comunale è quella del comune scelto, non una media: ci sono tutti i 7.904 comuni italiani, importati dalla tabella ufficiale del MEF. Delibera 2026 se pubblicata, altrimenti l'ultimo dato in vigore, come prevede la norma. Le addizionali regionali sono tutte e 21 (le 19 regioni più Trento e Bolzano, che deliberano separatamente).
 
 Nelle impostazioni avanzate si trovano fondo pensione complementare, carichi familiari e agevolazioni (sono tutte visibili e si possono disattivare).
 
@@ -22,12 +25,14 @@ C'è anche l'aliquota marginale, cioè quanto ti resta davvero di 1.000 € di a
 ### Le fonti
 
 Per ogni voce sono partito dalla norma invece che dai riassunti: legge di bilancio 2026 (L. 199/2025) per gli scaglioni IRPEF, artt. 12 e 13 TUIR per le detrazioni, L. 207/2024 per il taglio del cuneo, circolare INPS n. 6 del 30 gennaio 2026 per minimali, massimali e prima fascia pensionabile.
-Le voci contributive minori (CIGS, FIS, EBINTER, EST, COVELCO) vengono dal CCNL Terziario e Commercio. (per semplificare i calcoli)
+
+Le voci contributive minori (CIGS, FIS, EBINTER, EST, COVELCO) vengono dal CCNL Terziario e Commercio.
+
 Per le addizionali comunali la fonte è il MEF.
 
 ### Feedback su altri calcolatori online
 
-Prima di mettere mano all'interfaccia ho fatto uno scraping dei thread di r/ItaliaPersonalFinance, r/techcompenso e r/Italia dove gli autori di due calcolatori hanno chiesto feedback pubblico. In tutto circa 130 commenti, tra critiche, bug segnalati e richieste.
+Prima di mettere mano all'interfaccia ho letto, con l'aiuto dell'AI, i thread di r/ItaliaPersonalFinance, r/techcompenso e r/Italia dove gli autori di due calcolatori hanno chiesto feedback pubblico. In tutto circa 130 commenti, tra critiche, bug segnalati e richieste.
 
 I problemi più segnalati sono:
 - il massimale INPS che non viene considerato sulle RAL alte
@@ -49,9 +54,9 @@ Infine, molto presente anche la diffidenza verso gli strumenti fatti in fretta c
 
 Ho provato quelli che la community usa e cita: stipendee.it, che è il riferimento per parecchi, poi calcolastipendionetto.it, tuttocalcolato.it, calcolonetto.it, e i calcolatori pubblicati da Jet HR.
 
-Mi sono serviti per due cose. La prima è controllare i miei numeri: se il mio risultato si discostava dal loro volevo capire perché, e in un paio di casi la differenza mi ha fatto trovare qualche imprecisione. La seconda è capire cosa si aspetta chi arriva su una pagina del genere, perché ormai alcune cose sono uno standard: le card di sintesi in alto, la ripartizione del lordo, la scelta delle mensilità. Quelle sono state mantenute perchè è ciò che l'utente si aspetta di trovare.
+Mi sono serviti per due cose. La prima è controllare i miei numeri: se il mio risultato si discostava dal loro volevo capire perché, e in un paio di casi la differenza mi ha fatto trovare qualche imprecisione. La seconda è capire cosa si aspetta chi arriva su una pagina del genere, perché ormai alcune cose sono uno standard: le card di sintesi in alto, la ripartizione del lordo, la scelta delle mensilità. Quelle sono state mantenute perché è ciò che l'utente si aspetta di trovare.
 
-In più, ho cercato di aggiungere alcune parti che risultavano non essere coperte da tutti i calcolatori ma allo stesso tempo richieste dagli utenti, cioè nella spiegazione del calcolo e nel dato comunale.
+In più ho aggiunto quello che gli utenti chiedevano e che non trovavo negli altri calcolatori: la spiegazione del calcolo e il dato comunale preciso.
 
 ## Cosa ho deciso di conseguenza
 
@@ -61,7 +66,7 @@ Ogni riga del risultato si apre sul calcolo fatto con i tuoi numeri e cita la no
 
 Il netto → RAL non è una seconda formula. È una ricerca per bisezione sulla stessa funzione del RAL → netto, così le due direzioni coincidono per costruzione.
 
-Modellato la prima fascia pensionabile (56.224 €, oltre la quale scatta l'1% aggiuntivo) e il massimale contributivo (122.295 €), che sono i due punti dove le RAL alte danno risultati sbagliati.
+Ho modellato la prima fascia pensionabile (56.224 €, oltre la quale scatta l'1% aggiuntivo) e il massimale contributivo (122.295 €), che sono i due punti dove le RAL alte danno risultati sbagliati.
 
 Trattamento integrativo e taglio del cuneo sono opzioni che si vedono e si possono spegnere, con le condizioni di spettanza calcolate e spiegate una per una.
 
@@ -70,6 +75,7 @@ Ho aggiunto il tema scuro, che era richiesto spesso.
 Il campo della RAL si scrive, senza slider.
 
 Sull'aspetto ho cercato di evitare i segnali che nei commenti facevano storcere il naso: niente emoji usate come icone, niente sezioni decorative.
+
 Il design riprende il sistema visivo di Jet HR (colori, tipografia, raggi, ombre).
 
 In testa alla pagina ci sono l'anno fiscale e la data di aggiornamento, e per ogni comune è dichiarato da dove arriva il dato. Un calcolatore fiscale invecchia in fretta e chi lo apre deve sapere se è aggiornato o meno.
@@ -118,6 +124,14 @@ Il caso trattato è quello di un lavoratore dipendente a tempo indeterminato per
 TFR e buoni pasto non entrano nel netto, perché non sono soldi che vedi in busta ogni mese.
 
 Non l'ha rivisto un consulente del lavoro. È un prototipo, e il footer lo dice.
+
+## Note tecniche e debugging
+
+Il calcolatore è un unico file HTML: una pagina web che si apre con un doppio click, senza installare niente e senza bisogno di connessione. Dentro quel file ci sono la grafica, i dati di tutti i comuni e i calcoli. Non usa pezzi già pronti presi da altri: i grafici e la ricerca dei comuni sono scritti lì dentro.
+
+Per i controlli ho confrontato i risultati con gli altri calcolatori online, e ho fatto prove a campione su decine di comuni diversi per verificare l'addizionale comunale.
+
+È così che è saltato fuori il caso di Napoli. Il dato diceva 1,00%, sopra il tetto ordinario dello 0,8%, e sembrava un mio errore nella lettura del file del MEF. Sono andato a controllare la delibera ed era corretto: i comuni in squilibrio finanziario possono superare il tetto. Stessa cosa per Genova, che arriva all'1,2%.
 
 ## Fonti
 
