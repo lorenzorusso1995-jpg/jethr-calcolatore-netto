@@ -26,7 +26,7 @@ C'è anche l'aliquota marginale, cioè quanto ti resta davvero di 1.000 € di a
 
 Per ogni voce sono partito dalla norma invece che dai riassunti: legge di bilancio 2026 (L. 199/2025) per gli scaglioni IRPEF, artt. 12 e 13 TUIR per le detrazioni, L. 207/2024 per il taglio del cuneo, circolare INPS n. 6 del 30 gennaio 2026 per minimali, massimali e prima fascia pensionabile.
 
-Le voci contributive minori (CIGS, FIS, EBINTER, EST, COVELCO) vengono dal CCNL Terziario e Commercio.
+Sui contributi il calcolo usa il 9,19%, l'aliquota standard del settore privato. Chi ha un contratto con enti bilaterali e fondi sanitari, come il Terziario che arriva intorno al 10,16% sommando COVELCO, EBINTER e il fondo EST, può inserire la propria aliquota nelle impostazioni avanzate: su 35.000 € di RAL la differenza vale circa 14 € al mese.
 
 Per le addizionali comunali la fonte è il MEF.
 
@@ -119,7 +119,7 @@ Dove manca la delibera 2026 resta valida l'ultima in vigore, come prevede la nor
 
 Quindici comuni nati da fusioni recenti non hanno ancora una riga negli elenchi MEF e ricevono uno 0,80% indicativo, con un avviso dedicato.
 
-Il caso trattato è quello di un lavoratore dipendente a tempo indeterminato per l'anno intero con contratto CCNL Terziario e Commercio. Restano fuori conguagli di fine anno, premi di risultato detassati e welfare aziendale.
+Il caso trattato è quello di un lavoratore dipendente a tempo indeterminato per l'anno intero, con l'aliquota contributiva standard del settore privato. Restano fuori conguagli di fine anno, premi di risultato detassati e welfare aziendale.
 
 TFR e buoni pasto non entrano nel netto, perché non sono soldi che vedi in busta ogni mese.
 

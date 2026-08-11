@@ -389,6 +389,8 @@ footer{padding:34px 0;font-size:13px;color:var(--ink-3);line-height:1.7}
     <div class="card"><p class="k">Trattenute totali</p><p class="v" id="vTr">—</p><p class="n" id="nTr"></p></div>
   </div>
 
+  <p class="avviso" id="avvSalto" hidden></p>
+
   <div class="charts">
     <div>
       <p class="chart-t">Dove va la RAL</p>
@@ -991,7 +993,23 @@ function aggiorna(){
     $('k1').textContent='RAL da chiedere';
     $('vNa').textContent=eur(ral);
     $('nNa').textContent='per '+eur(inserito)+' netti l\'anno';
+    /* Il netto non cresce con continuità: superata una soglia di reddito scatta
+       un'agevolazione e fa un salto. Se il netto chiesto cade dentro un salto non
+       esiste nessuna RAL che lo produca — la bisezione restituisce il bordo
+       inferiore, e senza avviso l'utente si porterebbe a casa un numero diverso
+       da quello che ha chiesto. */
+    if(inserito>0&&Math.abs(inserito-r.netto)>2){
+      /* La bisezione si ferma sul bordo del salto: a seconda di quale lato cade il
+         punto trovato, l'altro bordo sta un euro sotto o un euro sopra. */
+      var sotto=r.netto>inserito?motore(ral-1,g).netto:r.netto,
+          sopra=r.netto>inserito?r.netto:motore(ral+1,g).netto;
+      $('avvSalto').innerHTML = sopra>inserito
+        ? '<b>Questo netto non è ottenibile.</b> Intorno a '+eur(ral)+' di RAL il netto salta da '+eur(sotto)+' a '+eur(sopra)+': in mezzo non c\'è nessun valore possibile. È lo scalino di un\'agevolazione che scatta oltre una certa soglia di reddito, di norma il trattamento integrativo. Chiedendo qualcosa in più della RAL indicata si ottengono '+eur(sopra)+' netti.'
+        : '<b>Questo netto è fuori dalla portata del calcolatore.</b> La ricerca della RAL si ferma a 1.000.000 €.';
+      $('avvSalto').hidden=false;
+    }else $('avvSalto').hidden=true;
   }else{
+    $('avvSalto').hidden=true;
     $('k1').textContent='Netto annuo';
     $('vNa').textContent=eur(r.netto);
     $('nNa').textContent=ral>0?'il '+pct(r.netto/ral*100)+' della RAL':'';
