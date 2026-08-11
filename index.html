@@ -105,7 +105,7 @@ h1{font-family:var(--display);font-size:40px;line-height:1.12;font-weight:700;le
   padding:12px 16px;box-shadow:var(--sh1),var(--lip)}
 .avviso b{font-weight:600;color:var(--ink)}
 /* modalità embed (?embed=1): solo form e risultato, per l'inserimento in un sito ospite */
-body.embed header,body.embed #metodo,body.embed footer{display:none}
+body.embed header,body.embed footer{display:none}
 body.embed .wrap{padding-top:10px}
 .embed-cred{display:none}
 body.embed .embed-cred{display:block;margin:22px 0 0;font-size:12.5px;color:var(--ink-3)}
@@ -295,7 +295,7 @@ dialog::backdrop{background:rgba(20,19,17,.45)}
 .dlg-b{padding:14px 24px 24px;color:var(--ink-2);font-size:14.5px;line-height:1.7}
 .dlg-f{border-top:1px solid var(--line);padding:13px 24px;font-size:12.5px;color:var(--ink-3)}
 
-footer{padding:34px 0;font-size:13px;color:var(--ink-3);line-height:1.7;max-width:70ch}
+footer{padding:34px 0;font-size:13px;color:var(--ink-3);line-height:1.7}
 
 @media (max-width:720px){
   header{padding:36px 0 26px}
@@ -420,80 +420,6 @@ footer{padding:34px 0;font-size:13px;color:var(--ink-3);line-height:1.7;max-widt
     <span class="acts-n" id="actN" role="status" aria-live="polite"></span>
   </div>
   <p class="embed-cred">Prototipo dimostrativo · normativa 2026 · aliquote comunali dalla tabella ufficiale MEF (delibere 2026 o ultimo dato vigente) · comuni test verificati a mano: Milano e Cagliari.</p>
-</section>
-
-<section id="metodo">
-  <p class="eyebrow">Metodo</p>
-  <details>
-    <summary>Cosa si intende per RAL, e perché il tuo CUD dice un numero diverso</summary>
-    <div class="body">
-      <p>Ci sono due numeri che vengono entrambi chiamati RAL, e differiscono di circa il dieci per cento.</p>
-      <ul>
-        <li><b>La RAL vera</b>, quella che chiede questo calcolatore, è l'imponibile previdenziale: il lordo <i>prima</i> dei contributi a carico del dipendente. È il numero scritto nell'offerta di lavoro e nel contratto.</li>
-        <li><b>L'imponibile IRPEF</b> è la RAL <i>meno</i> i contributi. È il numero che compare sulla Certificazione Unica e nel 730.</li>
-      </ul>
-      <p>Chi confronta il proprio CUD con l'offerta ricevuta sbaglia sistematicamente di circa il dieci per cento.</p>
-      <p>Non fanno parte della RAL i buoni pasto entro 8 € al giorno, i fringe benefit entro soglia e i rimborsi spese. Non ne fa parte nemmeno il TFR, che vale circa il 6,91% della retribuzione utile ed è accantonato a parte: non è liquidità corrente, quindi non compare nel netto.</p>
-    </div>
-  </details>
-  <details>
-    <summary>La catena di calcolo, passo per passo</summary>
-    <div class="body">
-      <ul>
-        <li><b>Contributi previdenziali</b> — si sottraggono dalla RAL. L'aliquota standard del settore privato è 9,19% fino alla prima fascia pensionabile, fissata per il 2026 a 56.224 €; sull'eccedenza si aggiunge l'1%. Sopra il massimale di 122.295 € non si versa più nulla.</li>
-        <li><b>Imponibile fiscale</b> — <code>RAL − contributi − oneri deducibili</code>.</li>
-        <li><b>IRPEF lorda</b> — progressiva a scaglioni: 23% fino a 28.000 €, 33% da 28.000 a 50.000, 43% oltre. Il 2026 ha portato il secondo scaglione dal 35% al 33%. L'aliquota alta si applica solo alla parte eccedente, mai a tutto il reddito.</li>
-        <li><b>Detrazioni</b> — la detrazione per lavoro dipendente si sottrae dall'imposta, insieme alle eventuali detrazioni per carichi familiari e all'ulteriore detrazione del cuneo fiscale. Il risultato non può scendere sotto zero.</li>
-        <li><b>Addizionali locali</b> — si calcolano sull'imponibile fiscale, non sull'IRPEF. Quella regionale è deliberata dalla regione, quella comunale dal singolo comune. Sono però dovute soltanto se l'IRPEF, al netto delle detrazioni, risulta effettivamente dovuta: in condizione di incapienza, cioè quando le detrazioni azzerano l'imposta, non si pagano.</li>
-        <li><b>Crediti che si sommano</b> — il trattamento integrativo e la somma esente del cuneo non sono detrazioni: si aggiungono al netto.</li>
-      </ul>
-    </div>
-  </details>
-  <details>
-    <summary>Perché il netto mensile non coincide con quello che vedi in busta</summary>
-    <div class="body">
-      <p><b>La tredicesima e la quattordicesima non cambiano il netto annuo</b>, cambiano solo come viene distribuito, e questo calcolatore lo modella.</p>
-      <p>Le detrazioni per lavoro dipendente sono ragguagliate ai giorni dell'anno, quindi si consumano tutte sulle dodici mensilità ordinarie. Sulla tredicesima si trattengono contributi e IRPEF ad aliquota marginale, ma non si applica alcuna detrazione: il suo netto risulta perciò sensibilmente più basso di un mese normale. Quello che la tredicesima non riceve si ridistribuisce sui dodici mesi ordinari, che risultano più alti della semplice media.</p>
-      <p>Con 20.000 € di RAL su tredici mensilità, per esempio, la media è 1.471 € ma il mese ordinario vale 1.504 € e la tredicesima 1.076 €.</p>
-      <p>Resta un'altra cosa che fa oscillare il netto reale.</p>
-      <p><b>Le addizionali si pagano in ritardo.</b> Quelle maturate sull'anno in corso vengono trattenute in undici rate da gennaio a novembre dell'anno successivo, più un acconto comunale del 30%. In regime stazionario il calcolo annuale è corretto, ma il primo anno di lavoro il netto reale è più alto, perché le addizionali non sono ancora partite.</p>
-    </div>
-  </details>
-  <details>
-    <summary>Semplificazioni adottate</summary>
-    <div class="body">
-      <ul>
-        <li>Impiegato a tempo indeterminato, anno lavorato per intero: le detrazioni sono ragguagliate a 365 giorni.</li>
-        <li>Nessun conguaglio di fine anno e nessuna variazione infrannuale di aliquota.</li>
-        <li>Nessun premio di risultato a tassazione sostitutiva, nessun welfare aziendale, nessun fringe benefit.</li>
-        <li>I contributi contrattuali specifici del CCNL (enti bilaterali, fondi sanitari) non sono inclusi nell'aliquota standard: si inseriscono con l'opzione <i>Modifica aliquote INPS</i>. Nel Terziario Confcommercio, per esempio, si arriva a circa 10,16%.</li>
-        <li>La detrazione per lavoro dipendente è calcolata a precisione piena; la norma prevede il troncamento del rapporto alla quarta cifra decimale, con uno scarto inferiore all'euro.</li>
-        <li>Le aliquote regionali riflettono le delibere in vigore; le regioni possono mantenerle invariate fino al 2028. Vanno riverificate sul portale del Ministero dell'economia e delle finanze.</li>
-        <li>Le aliquote comunali di tutti i 7.904 comuni sono importate dagli elenchi generali del MEF: delibera 2026 se già pubblicata (2.978 comuni), altrimenti l'ultimo dato in vigore (4.027), come prevede la norma; 884 comuni non hanno istituito l'addizionale. Le esenzioni «specifiche» — per categoria di reddito o platee particolari, circa 600 delibere — non sono modellate: lì fa fede la delibera.</li>
-        <li>I comuni con più aliquote, Cagliari compresa, le applicano per scaglioni progressivi come l'IRPEF: ogni aliquota colpisce solo la parte di reddito del suo scaglione, secondo la classificazione degli elenchi MEF.</li>
-        <li>La detrazione per figli a carico è attribuita per intero a chi fa il calcolo. L'art. 12 TUIR la ripartisce al 50% fra i genitori, tranne quando l'altro genitore è fiscalmente a carico: in quel caso spetta per intero, ed è la situazione che si crea attivando anche l'opzione del coniuge a carico.</li>
-        <li>Con il regime impatriati attivo, il reddito complessivo usato per le detrazioni e per il trattamento integrativo è quello già abbattuto del 50%. La prassi dell'Agenzia delle Entrate prevede in alcuni casi di considerare il reddito agevolato per intero: la differenza incide solo sulle fasce basse e non è modellata qui.</li>
-      </ul>
-    </div>
-  </details>
-  <details>
-    <summary>Fonti</summary>
-    <div class="body">
-      <ul>
-        <li>Legge di bilancio 2026 (L. 199/2025), art. 1 c. 3 — rimodulazione del secondo scaglione IRPEF al 33%.</li>
-        <li>Art. 13 TUIR — detrazioni per redditi di lavoro dipendente. Art. 12 TUIR — detrazioni per carichi di famiglia, come modificato dalla L. 207/2024 e dal D.Lgs. 192/2025.</li>
-        <li>L. 207/2024, art. 1 commi 4-9 — somma esente e ulteriore detrazione del cuneo fiscale, rese strutturali dalla L. 199/2025.</li>
-        <li>Art. 1 D.L. 3/2020, modificato dalla L. 234/2021 — trattamento integrativo.</li>
-        <li>INPS, circolare n. 6 del 30 gennaio 2026 — minimali, massimali e prima fascia di retribuzione pensionabile per il 2026.</li>
-        <li>Art. 50 D.Lgs. 446/1997 e art. 1 D.Lgs. 360/1998 — addizionale regionale e comunale, dovute solo se l'IRPEF al netto delle detrazioni risulta dovuta.</li>
-        <li>Art. 5 D.Lgs. 209/2023 — regime agevolativo per i lavoratori impatriati.</li>
-        <li><a href="https://www1.finanze.gov.it/finanze2/dipartimentopolitichefiscali/fiscalitalocale/nuova_addcomirpef/lista.htm" target="_blank" rel="noopener">Portale del MEF, fiscalità locale</a> — delibere di addizionale comunale, comune per comune.</li>
-        <li><a href="https://www1.finanze.gov.it/finanze2/dipartimentopolitichefiscali/fiscalitalocale/addirpef_newDF/download/tabella.htm" target="_blank" rel="noopener">MEF — elenchi generali scaricabili</a> — tabella CSV annuale con aliquote, soglie ed esenzioni di tutti i comuni, dal 2001 al 2026.</li>
-        <li><a href="https://www.istat.it/it/archivio/6789" target="_blank" rel="noopener">ISTAT — codici dei comuni, delle province e delle regioni</a>, tramite il dataset aperto <a href="https://github.com/matteocontrini/comuni-json" target="_blank" rel="noopener">comuni-json</a> — elenco dei 7.904 comuni con sigla di provincia.</li>
-        <li><a href="https://www.agenziaentrate.gov.it/portale/lavoratori-impatriati-209-2023/infogen-lavoratori-impatriati-209-2023-cittadini" target="_blank" rel="noopener">Agenzia delle Entrate</a> — nuovo regime impatriati.</li>
-      </ul>
-    </div>
-  </details>
 </section>
 
 <footer>
