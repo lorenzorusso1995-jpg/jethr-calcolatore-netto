@@ -10,11 +10,11 @@ Inserisci la RAL e ottieni il netto annuo e mensile, con il dettaglio di ogni tr
 
 Calcola il netto annuo e quello mensile, tenendo separati il mese ordinario e la tredicesima/quattordicesima (dal momento che sulle mensilità aggiuntive non si applicano le detrazioni).
 
-Fa anche il percorso inverso, che è poi la domanda vera di chi sta trattando un'offerta: che RAL devo chiedere per avere 1.800 € netti al mese?
+Fa anche il percorso inverso, che è poi la domanda che si pongono alcuni utenti che stanno trattando un'offerta: che RAL devo chiedere per avere 1.800 € netti al mese?
 
 Ogni voce del risultato si può aprire e leggere nel dettaglio, con la base imponibile, l'aliquota, il calcolo svolto sui numeri inseriti e il riferimento normativo.
 
-L'addizionale comunale è quella del comune scelto, non una media: ci sono tutti i 7.904 comuni italiani, importati dalla tabella ufficiale del MEF. Delibera 2026 se pubblicata, altrimenti l'ultimo dato in vigore, come prevede la norma. Le addizionali regionali sono tutte e 21 (le 19 regioni più Trento e Bolzano, che deliberano separatamente).
+L'addizionale comunale è quella del comune scelto: ci sono tutti i 7.904 comuni italiani, importati dalla tabella ufficiale del MEF. Delibera 2026 se pubblicata, altrimenti l'ultimo dato in vigore, come prevede la norma. Le addizionali regionali sono tutte e 21 (le 19 regioni più Trento e Bolzano, che deliberano separatamente).
 
 Nelle impostazioni avanzate si trovano fondo pensione complementare, carichi familiari e agevolazioni (sono tutte visibili e si possono disattivare).
 
