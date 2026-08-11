@@ -2,4 +2,5 @@
 # Tutto il resto (ricerca, documentazione, versioni precedenti) resta in locale.
 *
 !index.html
+!README.md
 !.gitignore
