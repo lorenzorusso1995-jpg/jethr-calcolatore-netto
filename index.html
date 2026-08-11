@@ -166,6 +166,11 @@ input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-
 .combo-list [role=option] .pr{color:var(--ink-3);font-size:12px}
 .combo-list [role=option].sel,.combo-list [role=option]:hover{background:var(--surface-2);box-shadow:var(--in1)}
 .combo-list .co-info{padding:8px 11px;font-size:12.5px;color:var(--ink-3)}
+/* In attesa che si scelgano regione e comune: il risultato resta nascosto,
+   perché senza addizionali locali il netto sarebbe più alto di quello vero. */
+.attesa-msg{display:none;color:var(--ink-3);font-size:14.5px;line-height:1.6;margin:10px 0 0;max-width:56ch}
+#sezRis.in-attesa>*:not(.eyebrow):not(.attesa-msg){display:none}
+#sezRis.in-attesa .attesa-msg{display:block}
 .hint{font-size:12.5px;color:var(--ink-3);margin:8px 0 0;line-height:1.55}
 .hint a{color:var(--ink-2)}
 
@@ -375,8 +380,9 @@ footer{padding:34px 0;font-size:13px;color:var(--ink-3);line-height:1.7;max-widt
   <div class="opts" id="opts"></div>
 </section>
 
-<section>
+<section id="sezRis">
   <p class="eyebrow">Risultato</p>
+  <p class="attesa-msg">Scegli la regione e il comune per vedere il calcolo. Le addizionali regionale e comunale sono parte delle trattenute: senza, il netto risulterebbe più alto di quello vero.</p>
   <div class="cards">
     <div class="card hero"><p class="k" id="k1">Netto annuo</p><p class="v" id="vNa">—</p><p class="n" id="nNa"></p></div>
     <div class="card"><p class="k" id="k2">Netto mensile</p><p class="v" id="vNm">—</p><p class="n" id="nNm"></p></div>
@@ -725,7 +731,7 @@ function leggiOpzioni(){
 
 function comuneAttivo(){
   var v=comSel;
-  if(v==='manuale')return null;
+  if(!v||v==='manuale')return null;
   var spec=COMUNI[$('reg').value]||[];
   for(var i=0;i<spec.length;i++)if(spec[i].n===v)return spec[i];
   for(var j=0;j<CACHE_COM.length;j++)if(CACHE_COM[j].n===v)return daDati(v,CACHE_COM[j].d);
@@ -1038,6 +1044,12 @@ function aggiorna(){
   for(var i=0;i<OPZIONI.length;i++){var o=OPZIONI[i];
     if(o.num)$('n_'+o.k).style.display=g[o.k]?'block':'none'}
 
+  /* Finché mancano regione o comune non si calcola: senza le addizionali locali
+     il netto verrebbe più alto del reale, ed è meglio non mostrare un numero. */
+  var pronto=!!$('reg').value&&!!comSel;
+  $('sezRis').className=pronto?'':'in-attesa';
+  if(!pronto){$('cnote').innerHTML='';$('chint').textContent='';inviaAltezza();return}
+
   var com=comuneAttivo();
   $('cnote').innerHTML=com?com.nota:
     'Comune inserito manualmente. Aliquota e soglia si leggono sul <a href="https://www1.finanze.gov.it/finanze2/dipartimentopolitichefiscali/fiscalitalocale/nuova_addcomirpef/lista.htm" target="_blank" rel="noopener">portale del MEF</a>, sezione fiscalità locale.';
@@ -1101,8 +1113,8 @@ for(var i=0;i<OPZIONI.length;i++){var o=OPZIONI[i];
     '<button type="button" class="q" data-i="'+i+'" aria-label="Che cos\'è: '+o.l+'">?</button></div>'}
 $('opts').innerHTML=opzHtml;
 
-var regHtml='';
-for(var nome in REGIONI)regHtml+='<option'+(nome==='Lombardia'?' selected':'')+'>'+nome+'</option>';
+var regHtml='<option value="">Scegli la regione</option>';
+for(var nome in REGIONI)regHtml+='<option>'+nome+'</option>';
 $('reg').innerHTML=regHtml;
 
 var comSel='', CACHE_COM=[], comboIdx=-1, comboVoci=[];
@@ -1115,11 +1127,14 @@ function normTesto(s){
 function etichettaSel(){return comSel}
 
 function popolaComuni(){
-  var reg=$('reg').value, lista=listaComuni(reg), spec=COMUNI[reg]||[], i;
+  var reg=$('reg').value, lista=reg?listaComuni(reg):[], i;
   CACHE_COM=[];
   for(i=0;i<lista.length;i++)CACHE_COM.push({n:lista[i].n,d:lista[i].d,k:normTesto(lista[i].n)});
-  comSel=spec.length?spec[0].n:CACHE_COM[0].n;
-  $('com').value=etichettaSel();
+  /* Nessun comune preselezionato: si sceglie sempre a mano, anche cambiando regione. */
+  comSel='';
+  $('com').value='';
+  $('com').disabled=!reg;
+  $('com').placeholder=reg?'Scrivi per cercare…':'Scegli prima la regione';
   chiudiCombo();
   sincronizzaCampi()}
 
@@ -1129,8 +1144,7 @@ function apriCombo(filtro){
     if(!q)pri.push(c);
     else{p=c.k.indexOf(q);
       if(p===0)pri.push(c);else if(p>0)sec.push(c)}}
-  var voci=pri.concat(sec), MAX=150, extra=voci.length>MAX?voci.length-MAX:0;
-  if(extra)voci=voci.slice(0,MAX);
+  var voci=pri.concat(sec);
   comboVoci=voci;
   var h='';
   for(i=0;i<voci.length;i++){c=voci[i];
@@ -1138,7 +1152,6 @@ function apriCombo(filtro){
     h+='<div role="option" id="co_'+i+'" data-i="'+i+'"'+(c.n===comSel?' aria-selected="true"':'')+'>'+
        nome+'<span class="pr">'+sig+'</span></div>'}
   if(!voci.length)h+='<div class="co-info">Nessun comune trovato in '+$('reg').value+'</div>';
-  if(extra)h+='<div class="co-info">… e altri '+extra+': continua a digitare per restringere</div>';
   $('comlist').innerHTML=h;
   $('comlist').hidden=false;
   $('com').setAttribute('aria-expanded','true');
@@ -1189,6 +1202,7 @@ function sincronizzaCampi(){
   var c=comuneAttivo();
   riempendo=true;
   if(c){$('cal').value=(c.tipo==='unica'?c.aliq*100:c.scal[c.scal.length-1][1]*100).toFixed(2);$('ces').value=c.esen}
+  else{$('cal').value='';$('ces').value=''}
   riempendo=false}
 
 function valoreRal(){return parseInt(String($('ral').value).replace(/\D/g,''),10)||0}
