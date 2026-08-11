@@ -374,7 +374,6 @@ footer{padding:34px 0;font-size:13px;color:var(--ink-3);line-height:1.7}
       <p class="hint">Da compilare tu, lascia 0 se non versi</p>
     </div>
   </div>
-  <p class="hint" id="chint"></p>
 
   <p class="eyebrow" style="margin:30px 0 0">Opzioni e agevolazioni</p>
   <div class="opts" id="opts"></div>
@@ -388,8 +387,6 @@ footer{padding:34px 0;font-size:13px;color:var(--ink-3);line-height:1.7}
     <div class="card"><p class="k" id="k2">Netto mensile</p><p class="v" id="vNm">—</p><p class="n" id="nNm"></p></div>
     <div class="card"><p class="k">Trattenute totali</p><p class="v" id="vTr">—</p><p class="n" id="nTr"></p></div>
   </div>
-
-  <p class="avviso" id="avvSalto" hidden></p>
 
   <div class="charts">
     <div>
@@ -518,11 +515,11 @@ var NOTA_GENERICA='Comune di recente istituzione, non ancora presente nella tabe
 
 function notaMef(rip,part,mai){
   var t=mai
-    ?'Dalla <a href="'+MEF_TABELLA+'" target="_blank" rel="noopener">tabella ufficiale del MEF</a> questo comune risulta non aver istituito l\'addizionale comunale: aliquota zero.'
-    :'Aliquota ed esenzione dalla <a href="'+MEF_TABELLA+'" target="_blank" rel="noopener">tabella ufficiale del MEF</a>'+
-      (rip?': il comune non ha ancora deliberato per il 2026, quindi vale l\'ultimo dato in vigore (elenco consolidato 2025), come prevede la norma.'
-          :': delibera pubblicata per il 2026.');
-  if(part)t+=' <b>Attenzione:</b> la delibera prevede casi o esenzioni particolari, per categoria di reddito o platee specifiche, non modellati qui: fa fede il portale MEF.';
+    ?'Dalla <a href="'+MEF_TABELLA+'" target="_blank" rel="noopener">tabella MEF</a>: questo comune non ha istituito l\'addizionale.'
+    :'Dalla <a href="'+MEF_TABELLA+'" target="_blank" rel="noopener">tabella MEF</a>'+
+      (rip?', ultima delibera in vigore: per il 2026 il comune non ha ancora deliberato.'
+          :', delibera 2026.');
+  if(part)t+=' Esenzioni particolari non modellate qui: fa fede il portale MEF.';
   return t}
 
 /* Decodifica il campo dati di ELENCO: u<pct> unica · s<pct>:<cap>,… scaglioni progressivi ·
@@ -903,7 +900,11 @@ function disegnaDonut(r,ral){
     leg+='<li><i style="background:'+parti[i][2]+'"></i><span class="nm">'+parti[i][0]+'</span>'+
          '<span class="vl">'+eur(parti[i][1])+'</span><span class="pc">'+pct(q)+'</span></li>'}
   $('dn').innerHTML=arcs;
-  $('dnV').textContent=ral>0?pct(r.netto/ral*100):'—';
+  /* La percentuale al centro deve avere la stessa base delle fette, cioè il totale
+     del grafico. Dividendola per la RAL, sui redditi bassi usciva oltre il 100%:
+     i crediti (trattamento integrativo e somma esente) si sommano al netto, che
+     può superare la RAL, e il numero grande smentiva la legenda sotto. */
+  $('dnV').textContent=ral>0?pct(Math.max(0,r.netto)/somma*100):'—';
   $('lg').innerHTML=leg}
 
 function aggiornaMarginale(g,ralCorrente){
@@ -976,15 +977,11 @@ function aggiorna(){
      il netto verrebbe più alto del reale, ed è meglio non mostrare un numero. */
   var pronto=!!$('reg').value&&!!comSel;
   $('sezRis').className=pronto?'':'in-attesa';
-  if(!pronto){$('cnote').innerHTML='';$('chint').textContent='';inviaAltezza();return}
+  if(!pronto){$('cnote').innerHTML='';inviaAltezza();return}
 
   var com=comuneAttivo();
   $('cnote').innerHTML=com?com.nota:
     'Comune inserito manualmente. Aliquota e soglia si leggono sul <a href="https://www1.finanze.gov.it/finanze2/dipartimentopolitichefiscali/fiscalitalocale/nuova_addcomirpef/lista.htm" target="_blank" rel="noopener">portale del MEF</a>, sezione fiscalità locale.';
-  $('chint').textContent=(com&&com.tipo!=='unica')
-    ? 'Questo comune ha aliquote per scaglioni: il campo mostra l\'aliquota effettiva complessiva e si aggiorna al variare della RAL.'
-    : '';
-
   var inserito=valoreRal();
   var ral=inverso?ralDaNetto(inserito,g):inserito;
   var r=motore(ral,g), mens=parseInt($('mens').value,10);
@@ -993,23 +990,7 @@ function aggiorna(){
     $('k1').textContent='RAL da chiedere';
     $('vNa').textContent=eur(ral);
     $('nNa').textContent='per '+eur(inserito)+' netti l\'anno';
-    /* Il netto non cresce con continuità: superata una soglia di reddito scatta
-       un'agevolazione e fa un salto. Se il netto chiesto cade dentro un salto non
-       esiste nessuna RAL che lo produca — la bisezione restituisce il bordo
-       inferiore, e senza avviso l'utente si porterebbe a casa un numero diverso
-       da quello che ha chiesto. */
-    if(inserito>0&&Math.abs(inserito-r.netto)>2){
-      /* La bisezione si ferma sul bordo del salto: a seconda di quale lato cade il
-         punto trovato, l'altro bordo sta un euro sotto o un euro sopra. */
-      var sotto=r.netto>inserito?motore(ral-1,g).netto:r.netto,
-          sopra=r.netto>inserito?r.netto:motore(ral+1,g).netto;
-      $('avvSalto').innerHTML = sopra>inserito
-        ? '<b>Questo netto non è ottenibile.</b> Intorno a '+eur(ral)+' di RAL il netto salta da '+eur(sotto)+' a '+eur(sopra)+': in mezzo non c\'è nessun valore possibile. È lo scalino di un\'agevolazione che scatta oltre una certa soglia di reddito, di norma il trattamento integrativo. Chiedendo qualcosa in più della RAL indicata si ottengono '+eur(sopra)+' netti.'
-        : '<b>Questo netto è fuori dalla portata del calcolatore.</b> La ricerca della RAL si ferma a 1.000.000 €.';
-      $('avvSalto').hidden=false;
-    }else $('avvSalto').hidden=true;
   }else{
-    $('avvSalto').hidden=true;
     $('k1').textContent='Netto annuo';
     $('vNa').textContent=eur(r.netto);
     $('nNa').textContent=ral>0?'il '+pct(r.netto/ral*100)+' della RAL':'';
