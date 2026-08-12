@@ -6,6 +6,19 @@ Prototipo per la selezione AI Builder di Jet HR.
 
 Inserisci la RAL e ottieni il netto annuo e mensile, con il dettaglio di ogni trattenuta e il calcolo passo per passo. Funziona anche al contrario, dal netto che vuoi in busta alla RAL da chiedere.
 
+## Indice
+
+- [Cosa fa](#cosa-fa)
+- [Come l'ho costruito](#come-lho-costruito)
+  - [Le fonti](#le-fonti)
+  - [Feedback su altri calcolatori online](#feedback-su-altri-calcolatori-online)
+  - [I calcolatori che già esistono](#i-calcolatori-che-già-esistono)
+- [Cosa ho deciso di conseguenza](#cosa-ho-deciso-di-conseguenza)
+- [Il calcolo](#il-calcolo)
+- [Limiti](#limiti)
+- [Note tecniche e debugging](#note-tecniche-e-debugging)
+- [Fonti](#fonti)
+
 ## Cosa fa
 
 Calcola il netto annuo e quello mensile, tenendo separati il mese ordinario e la tredicesima/quattordicesima (dal momento che sulle mensilità aggiuntive non si applicano le detrazioni).
