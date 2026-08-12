@@ -241,6 +241,7 @@ input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-
 .lg-det li::before{content:counter(s);position:absolute;left:0;top:5px;width:17px;height:17px;
   border-radius:50%;background:var(--line-2);color:var(--ink-2);font-size:10.5px;line-height:17px;text-align:center}
 .lg-det li b{font-weight:500;color:var(--ink)}
+.lg-det .nota{font-size:12px;color:var(--ink-3);margin:12px 0 0}
 .lg-det .src{font-size:12px;color:var(--ink-3);margin:12px 0 0;padding-top:11px;border-top:1px solid var(--line)}
 .lg-sub{display:flex;justify-content:space-between;gap:16px;padding:12px;font-size:14px;
   border-bottom:1px solid var(--line-2);color:var(--ink-2)}
@@ -355,8 +356,6 @@ footer{padding:34px 0;font-size:13px;color:var(--ink-3);line-height:1.7}
       </div>
     </div>
   </div>
-  <p class="hint" id="cnote"></p>
-
   <div class="grid3" style="margin-top:18px">
     <div class="f">
       <label for="cal">Addizionale comunale %</label>
@@ -817,7 +816,7 @@ function motore(ral,g){
       'Addizionale dovuta: <b>0 €</b>'];
     aCom=0}
   R.push({gr:'addizionali',n:'Addizionale comunale',d:com?(com.n+(com.generico?' — aliquota indicativa':com.mai?' — addizionale non istituita':com.mef?' — tabella MEF':'')):'Comune inserito manualmente',
-    p:pCom,src:'Art. 1 D.Lgs. 360/1998; delibera comunale, portale MEF',v:-aCom});
+    p:pCom,nota:com?com.nota:null,src:'Art. 1 D.Lgs. 360/1998; delibera comunale, portale MEF',v:-aCom});
 
   var integrativo=0;
   if(g.renzi){
@@ -872,6 +871,7 @@ function disegnaLedger(r){
          '<span class="bd"><span class="nm">'+x.n+'</span><span class="ds">'+x.d+'</span></span>'+
          '<span class="vl'+cls+'">'+(x.v<0?'−':'')+eur(Math.abs(x.v))+'</span></button>'+
          '<div class="lg-det" id="'+id+'" hidden><ol><li>'+x.p.join('</li><li>')+'</li></ol>'+
+         (x.nota?'<p class="nota">'+x.nota+'</p>':'')+
          '<p class="src">Fonte: '+x.src+'</p></div>'}
     if(gr.sub){
       var tot=gr.k==='contributi'?r.contributi:gr.k==='addizionali'?r.addizionali:
@@ -977,11 +977,9 @@ function aggiorna(){
      il netto verrebbe più alto del reale, ed è meglio non mostrare un numero. */
   var pronto=!!$('reg').value&&!!comSel;
   $('sezRis').className=pronto?'':'in-attesa';
-  if(!pronto){$('cnote').innerHTML='';inviaAltezza();return}
+  if(!pronto){inviaAltezza();return}
 
   var com=comuneAttivo();
-  $('cnote').innerHTML=com?com.nota:
-    'Comune inserito manualmente. Aliquota e soglia si leggono sul <a href="https://www1.finanze.gov.it/finanze2/dipartimentopolitichefiscali/fiscalitalocale/nuova_addcomirpef/lista.htm" target="_blank" rel="noopener">portale del MEF</a>, sezione fiscalità locale.';
   var inserito=valoreRal();
   var ral=inverso?ralDaNetto(inserito,g):inserito;
   var r=motore(ral,g), mens=parseInt($('mens').value,10);
