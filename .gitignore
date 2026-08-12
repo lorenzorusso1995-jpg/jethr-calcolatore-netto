@@ -1,5 +1,5 @@
 # Nel repo pubblico va solo il calcolatore: index.html
-# Tutto il resto (ricerca, documentazione, versioni precedenti) resta in locale.
+# Tutto il resto (ricerca, documentazione, fonti, struttura) inserito nel README.md.
 *
 !index.html
 !README.md
